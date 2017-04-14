@@ -52,6 +52,7 @@ public class PlayScene extends GameScene{
     @Override
     public void run() {
         mainCharacterController.run();
+        robotController.run();
         popStackCount++;
         if (popStackCount == GameConfig.POP_STACK_TIME){
             popStackCount = 0;

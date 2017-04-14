@@ -24,7 +24,7 @@ public class RobotController extends SingleController {
 
     public RobotController(GameObject gameObject) {
         super(gameObject);
-        this.gameVector.dx = SPEED;
+        //this.gameVector.dx = SPEED;
     }
 
     public RobotController(GameObject gameObject, Animation view) {
@@ -32,23 +32,32 @@ public class RobotController extends SingleController {
         this.gameVector.dx = SPEED;
     }
 
-//    @Override
-//    public void run() {
-//        System.out.println("run");
-//        super.run();
-//
-//        while (gameObject.getX() > 0) {
-//
-//            System.out.println("a");
-//            this.gameObject.setX(gameObject.getX() - SPEED);
+    @Override
+    public void run() {
+        System.out.println("run");
+
+        super.run();
+
+        if (gameObject.getX() > 0) {
+            System.out.println("a");
+            this.gameObject.setX(gameObject.getX() - SPEED);
+        }
+        //this.gameVector.dx = - SPEED;
+//        if (this.gameObject.getX() > 300  ) {
+//            robot.runLeft();
 //        }
-//        //this.gameVector.dx = - SPEED;
-//    }
+//        robot.walkUp();
+    }
+
+
 
     @Override
     public void draw(Graphics g) {
-        this.view = animationRobot;
-        super.draw(g);
+        if (gameObject.getX() > 0) {
+            this.view = animationRobot;
+
+        }
+            super.draw(g);
     }
 
     public Robot getRobotController() {
