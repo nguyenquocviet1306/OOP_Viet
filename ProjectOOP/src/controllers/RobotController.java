@@ -12,9 +12,10 @@ import java.awt.*;
  * Created by Admin on 3/25/2017.
  */
 public class RobotController extends SingleController {
-
+    public MainCharacter mainCharacter;
+    private MainCharacterController mainCharacterController;
     private Robot robot = (Robot) this.gameObject;
-    private SingleView robotImage = new SingleView("res/robot_left_0.png");
+    private SingleView robotImage = new SingleView("res/robot_left_3.png");
     private Animation animationRobot = new Animation("res/robot_left_0.png",
             "res/robot_left_1.png",
             "res/robot_left_2.png",
@@ -35,13 +36,15 @@ public class RobotController extends SingleController {
     @Override
     public void run() {
         System.out.println("run");
-
         super.run();
-
-        if (gameObject.getX() > 0) {
+       //System.out.println("Toa do la" + MainCharacterController.instace.getGameObject().getX());
+       System.out.println("Toa do robot" + this.getGameObject().getX() );
+        if (gameObject.getX() - mainCharacter.getX() > 200) {
             System.out.println("a");
             this.gameObject.setX(gameObject.getX() - SPEED);
         }
+
+
         //this.gameVector.dx = - SPEED;
 //        if (this.gameObject.getX() > 300  ) {
 //            robot.runLeft();
@@ -53,9 +56,11 @@ public class RobotController extends SingleController {
 
     @Override
     public void draw(Graphics g) {
-        if (gameObject.getX() > 0) {
+        if (gameObject.getX() - mainCharacter.getX()> 200) {
             this.view = animationRobot;
 
+        } else {
+            this.view = robotImage;
         }
             super.draw(g);
     }

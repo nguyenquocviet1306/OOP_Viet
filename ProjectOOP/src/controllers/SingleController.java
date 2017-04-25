@@ -43,6 +43,10 @@ public class SingleController implements BaseController {
         return gameVector;
     }
 
+    public GameObject getGameObject() {
+        return gameObject;
+    }
+
     @Override
     public void run() {
         //gameObject.move(this.gameVector);

@@ -1,5 +1,6 @@
 package scenes;
 
+import controllers.BulletRobotController;
 import controllers.MainCharacterController;
 import controllers.RobotController;
 import game.GameConfig;
@@ -28,14 +29,24 @@ public class PlayScene extends GameScene{
     private Image backgroundImage;
     private ControllerManager controllerManager;
     private RobotController robotController;
+    private RobotBullet robotBullet;
+    private BulletRobotController bulletRobotController;
+
     public PlayScene(){
         mainCharacterController = new MainCharacterController(new MainCharacter(0, 300, 0, 80, 80));
         robotController = new RobotController(new Robot(600,300,0));
-        mainCharacter = mainCharacterController.getMainCharacter();
         robot = robotController.getRobotController();
+
+
+        bulletRobotController = new BulletRobotController(new RobotBullet(robot.getX(),robot.middleY() - 10, 0 ));
+//        bulletRobotController = new BulletRobotController(new RobotBullet(500,300, 0 ));
+        robotBullet = bulletRobotController.getRobotBullet();
+        mainCharacter = mainCharacterController.getMainCharacter();
+
         stackControlAction = mainCharacter.getStackControlAction();
         backgroundImage = Utils.loadImage("res/background.png");
         controllerManager = new ControllerManager();
+        robotController.mainCharacter = mainCharacter;
     }
     @Override
     public void update(Graphics g) {
@@ -43,6 +54,7 @@ public class PlayScene extends GameScene{
         mainCharacterController.draw(g);
         robotController.draw(g);
         controllerManager.draw(g);
+        bulletRobotController.draw(g);
     }
 
 
@@ -53,6 +65,7 @@ public class PlayScene extends GameScene{
     public void run() {
         mainCharacterController.run();
         robotController.run();
+        bulletRobotController.run();
         popStackCount++;
         if (popStackCount == GameConfig.POP_STACK_TIME){
             popStackCount = 0;

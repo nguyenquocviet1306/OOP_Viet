@@ -65,6 +65,10 @@ public abstract class GameObject {
         return height;
     }
 
+    public int middleY() {
+        return this.y + this.height / 2;
+    }
+
     public boolean isLeft() {
         return isLeft;
     }

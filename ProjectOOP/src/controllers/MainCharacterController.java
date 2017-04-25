@@ -24,12 +24,19 @@ public class MainCharacterController extends SingleController {
         super(gameObject);
     }
 
+    public MainCharacterController() {
+    }
+
     private Animation animationDavisWalkingRight = new Animation(ResourceMap.DAVIS_WALKING, GameConfig.WALKING_FRAME_RATE);
     private Animation animationDavisStanding = new Animation(ResourceMap.DAVIS_STANDING, GameConfig.STANDING_FRAME_RATE);
 
 
+
+
     @Override
     public void run() {
+
+        System.out.println("Toa do" + this.getGameObject().getX());
         switch (mainCharacter.getCharacterState()) {
             case STANDING:
                 break;
@@ -92,4 +99,7 @@ public class MainCharacterController extends SingleController {
     public MainCharacter getMainCharacter() {
         return mainCharacter;
     }
+
+
+    public static final MainCharacterController instace = new MainCharacterController();
 }

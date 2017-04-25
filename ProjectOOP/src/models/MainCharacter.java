@@ -16,9 +16,22 @@ public class MainCharacter extends GameObject{
         return stackControlAction;
     }
 
+
+
     public MainCharacter(int x, int y, int z, int width, int height){
         super(x, y, z, width, height);
         stackControlAction  = new Stack<>();
+    }
+
+
+    @Override
+    public int getX() {
+        return super.getX();
+    }
+
+    @Override
+    public int getY() {
+        return super.getY();
     }
 
     public void walkLeft(){
@@ -50,4 +63,8 @@ public class MainCharacter extends GameObject{
     public void setCharacterState(CharacterState characterState) {
         this.characterState = characterState;
     }
+
+
+
+
 }
