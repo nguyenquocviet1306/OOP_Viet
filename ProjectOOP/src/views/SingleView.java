@@ -1,8 +1,8 @@
 package views;
 
 import models.GameObject;
-import utils.Utils;
 
+import utils.Utils;
 import java.awt.*;
 
 /**
@@ -14,6 +14,7 @@ public class SingleView implements View {
     public SingleView(Image image) {
         this.image = image;
     }
+
     public SingleView(String url) {
         this.image = Utils.loadImage(url);
     }

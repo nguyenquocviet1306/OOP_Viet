@@ -1,8 +1,8 @@
 package views;
 
-import game.GameConfig;
 import models.GameObject;
 import utils.Utils;
+import game.GameConfig;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,10 +22,19 @@ public class Animation implements View {
         this.frameRate = frameRate;
     }
 
+    public Animation(String[] imagesName, int frameRate){
+        this.imageVector = new Vector<>();
+        for (int i =0; i < imagesName.length; i++){
+            BufferedImage image = Utils.loadImage(imagesName[i]);
+            this.imageVector.add(image);
+        }
+        this.frameRate = frameRate;
+    }
+
     public Animation(String... imageName){
-        imageVector = new Vector<>();
+        this.imageVector = new Vector<>();
         for (String name: imageName) {
-            imageVector.add(Utils.loadImage(name));
+            this.imageVector.add(Utils.loadImage(name));
             System.out.println("name : " + name);
             this.frameRate = GameConfig.STANDING_FRAME_RATE;
 
@@ -38,6 +47,14 @@ public class Animation implements View {
         this.frameRate = frameRate;
     }
 
+    public boolean isAnimationEnd() {
+        return animationEnd;
+    }
+
+    public void setAnimationEnd(boolean animationEnd) {
+        this.animationEnd = animationEnd;
+    }
+
     @Override
     public void draw(Graphics g, GameObject gameObject) {
         BufferedImage image = imageVector.get(imageCount);
@@ -46,6 +63,8 @@ public class Animation implements View {
                 image,
                 gameObject.getX(),
                 gameObject.getY(),
+                gameObject.getWidth(),
+                gameObject.getHeight(),
                 null);
         if (frameRateCount == frameRate) {
             frameRateCount = 0;
@@ -57,4 +76,5 @@ public class Animation implements View {
         }
 
     }
+
 }

@@ -10,9 +10,24 @@ public abstract class GameObject {
     protected boolean isAlive;
     protected boolean isLeft;
     protected boolean isRight;
-    protected boolean isUp;
-    protected boolean isDown;
     protected boolean isAttack;
+
+    public boolean isLeft() {
+        return isLeft;
+    }
+
+    public void setLeft(boolean left) {
+        isLeft = left;
+    }
+
+    public boolean isRight() {
+        return isRight;
+    }
+
+    public void setRight(boolean right) {
+        isRight = right;
+    }
+
     protected boolean isJump;
     protected boolean isDefend;
     protected int x;
@@ -65,26 +80,6 @@ public abstract class GameObject {
         return height;
     }
 
-    public int middleY() {
-        return this.y + this.height / 2;
-    }
-
-    public boolean isLeft() {
-        return isLeft;
-    }
-
-    public boolean isRight() {
-        return isRight;
-    }
-
-    public boolean isUp() {
-        return isUp;
-    }
-
-    public boolean isDown() {
-        return isDown;
-    }
-
     public boolean isAttack() {
         return isAttack;
     }
@@ -101,22 +96,6 @@ public abstract class GameObject {
         return drawY;
     }
 
-    public void setLeft(boolean left) {
-        isLeft = left;
-    }
-
-    public void setRight(boolean right) {
-        isRight = right;
-    }
-
-    public void setUp(boolean up) {
-        isUp = up;
-    }
-
-    public void setDown(boolean down) {
-        isDown = down;
-    }
-
     public void setAttack(boolean attack) {
         isAttack = attack;
     }
@@ -127,6 +106,11 @@ public abstract class GameObject {
 
     public void setDefend(boolean defend) {
         isDefend = defend;
+    }
+
+    // BAN DAN ROBOT
+    public int middleY() {
+        return this.y + this.height / 2;
     }
 
     public void setX(int x) {
@@ -149,11 +133,6 @@ public abstract class GameObject {
         Rectangle3D rectThis = this.getRect();
         Rectangle3D rectObject = gameObject.getRect();
         return rectThis.intersect(rectObject);
-    }
-
-    public void move(GameVector gameVector) {
-        this.x += gameVector.dx;
-        this.y += gameVector.dy;
     }
 
     private Rectangle3D getRect(){

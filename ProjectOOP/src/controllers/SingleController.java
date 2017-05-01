@@ -2,7 +2,6 @@ package controllers;
 
 import managers.ControllerManager;
 import models.GameObject;
-import models.GameVector;
 import views.Animation;
 import views.SingleView;
 import views.View;
@@ -15,9 +14,7 @@ import java.awt.*;
 public class SingleController implements BaseController {
     protected GameObject gameObject;
     protected View view;
-    protected GameVector gameVector;
     protected boolean isAlive = true;
-
 
     public SingleController() {
     }
@@ -29,27 +26,16 @@ public class SingleController implements BaseController {
     public SingleController(GameObject gameObject, Animation view) {
         this.gameObject = gameObject;
         this.view = view;
-        this.gameVector = new GameVector();
-
     }
 
     public SingleController(GameObject gameObject, SingleView view) {
         this.gameObject = gameObject;
         this.view = view;
-        this.gameVector = new GameVector();
-    }
-
-    public GameVector getGameVector() {
-        return gameVector;
-    }
-
-    public GameObject getGameObject() {
-        return gameObject;
     }
 
     @Override
     public void run() {
-        //gameObject.move(this.gameVector);
+
     }
 
     @Override

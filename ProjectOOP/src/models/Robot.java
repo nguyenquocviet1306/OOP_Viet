@@ -1,17 +1,11 @@
 package models;
-
 import game.GameConfig;
-
 /**
- * Created by Admin on 3/25/2017.
+ * Created by Nguyen on 4/25/2017.
  */
-public class Robot extends GameObject {
-
-    public static final int WIDTH = 80;
-    public static final int HEIGHT = 80;
-
-    public Robot(int x, int y, int z) {
-        super(x, y, z, WIDTH, HEIGHT);
+public class Robot extends GameObject{
+    public Robot(int x, int y, int z, int width, int height) {
+        super(x, y, z, width, height);
     }
 
     public void walkLeft(){
@@ -32,4 +26,5 @@ public class Robot extends GameObject {
     public void runRight(){
         this.x += GameConfig.RUNNING_SPEED;
     }
+
 }
