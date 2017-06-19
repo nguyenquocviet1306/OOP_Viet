@@ -1,8 +1,8 @@
 package views;
 
+import game.GameConfig;
 import models.GameObject;
 import utils.Utils;
-import game.GameConfig;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -31,20 +31,18 @@ public class Animation implements View {
         this.frameRate = frameRate;
     }
 
-    public Animation(String... imageName){
+    public Animation(String url, int frameRate, int subWidth, int subHeight, int border){
         this.imageVector = new Vector<>();
-        for (String name: imageName) {
-            this.imageVector.add(Utils.loadImage(name));
-            System.out.println("name : " + name);
-            this.frameRate = GameConfig.STANDING_FRAME_RATE;
-
-        }
-    }
-
-    public Animation(String url, int frameRate){
-        this.imageVector = new Vector<>();
-        imageVector = Utils.loadSheetAnimation(url, 80, 80, 0, 4);
+        imageVector = Utils.loadSheetAnimation(url, subWidth, subHeight, border, 5);
         this.frameRate = frameRate;
+    }
+    public Animation(int frameRate, String... imageName){
+        imageVector = new Vector<>();
+        for (String name: imageName) {
+            imageVector.add(Utils.loadImage(name));
+            System.out.println("name : " + name);
+            this.frameRate = frameRate;
+        }
     }
 
     public boolean isAnimationEnd() {
@@ -55,16 +53,26 @@ public class Animation implements View {
         this.animationEnd = animationEnd;
     }
 
+    public void resetAnimation(int imageCount) {
+        this.imageCount = imageCount;
+    }
+
+    public int getNumberOfFrame() {
+        return imageVector.size() - 1;
+    }
+
+    public BufferedImage getSubImage(int position){
+        return imageVector.get(position);
+    }
+
     @Override
     public void draw(Graphics g, GameObject gameObject) {
         BufferedImage image = imageVector.get(imageCount);
         frameRateCount++;
         g.drawImage(
                 image,
-                gameObject.getX(),
-                gameObject.getY(),
-                gameObject.getWidth(),
-                gameObject.getHeight(),
+                gameObject.getDrawX(),
+                gameObject.getDrawY(),
                 null);
         if (frameRateCount == frameRate) {
             frameRateCount = 0;
@@ -74,7 +82,5 @@ public class Animation implements View {
                 animationEnd = true;
             }
         }
-
     }
-
 }

@@ -6,7 +6,6 @@ import controllers.SkillCharacterController;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Vector;
 
 /**
  * Created by Nhan on 3/11/2017.
@@ -14,36 +13,59 @@ import java.util.Vector;
 public class ControllerManager implements BaseController{
 
     private ArrayList<SingleController>  controllerArrayList;
-    private static ArrayList<SkillCharacterController>  skillCharacterControllerArrayList;
+    private static ArrayList<SkillCharacterController> skillList;
+    public static ControllerManager instance = new ControllerManager();
 
-    public static ArrayList<SkillCharacterController> getSkillCharacterControllerArrayList() {
-        if(skillCharacterControllerArrayList == null)
-            skillCharacterControllerArrayList = new ArrayList<>();
-        return skillCharacterControllerArrayList;
-    }
-
-    public ControllerManager(ArrayList<SingleController> controllerArrayList) {
-        this.controllerArrayList = controllerArrayList;
+    public static ArrayList<SkillCharacterController> getSkillList() {
+        if(skillList == null)
+            skillList = new ArrayList<>();
+        return skillList;
     }
 
     public ControllerManager() {
+        controllerArrayList = new ArrayList<>();
+        skillList = new ArrayList<>();
     }
 
-    public ArrayList<SingleController> getControllerArrayList() {
-        return controllerArrayList;
+    public void addController(SingleController controller){
+        controllerArrayList.add(controller);
+    }
+
+    public void removeController(SingleController controller){
+        controllerArrayList.remove(controller);
+    }
+
+    public void clear(){
+        controllerArrayList = new ArrayList<>();
     }
 
     @Override
     public void run() {
-        for (int i = 0; i < skillCharacterControllerArrayList.size(); i++){
-            skillCharacterControllerArrayList.get(i).run();
+        for (int i = 0; i < skillList.size(); i++){
+            SkillCharacterController controller = skillList.get(i);
+            controller.run();
+            if (!controller.isAlive()){
+                controller.getGameObject().destroy();
+                skillList.remove(controller);
+            }
+        }
+
+        for (int i = 0; i < controllerArrayList.size(); i++){
+            controllerArrayList.get(i).run();
+            if(!controllerArrayList.get(i).isAlive()){
+                removeController(controllerArrayList.get(i));
+            }
         }
     }
 
     @Override
     public void draw(Graphics g) {
-        for (int i = 0; i < skillCharacterControllerArrayList.size(); i++){
-            skillCharacterControllerArrayList.get(i).draw(g);
+        for (int i = 0; i < skillList.size(); i++){
+            skillList.get(i).draw(g);
+        }
+
+        for (int i = 0; i < controllerArrayList.size(); i++){
+            controllerArrayList.get(i).draw(g);
         }
     }
 }

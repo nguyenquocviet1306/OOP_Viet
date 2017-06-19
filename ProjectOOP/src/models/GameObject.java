@@ -1,16 +1,25 @@
 package models;
 
+import managers.CollisionManager;
+import managers.GameObjectManager;
 import game.GameConfig;
 import utils.Rectangle3D;
 
 /**
  * Created by Nhan on 2/28/2017.
  */
-public abstract class GameObject {
-    protected boolean isAlive;
-    protected boolean isLeft;
-    protected boolean isRight;
+public abstract class GameObject implements Collision{
+    protected boolean isAlive = true;
+    protected boolean isLeft = true;
     protected boolean isAttack;
+    protected boolean isJump;
+    protected int x;
+    protected int y;
+    protected int z;
+    protected int drawX;
+    protected int drawY; // position y to draw
+    private int width;
+    private int height;
 
     public boolean isLeft() {
         return isLeft;
@@ -20,37 +29,24 @@ public abstract class GameObject {
         isLeft = left;
     }
 
-    public boolean isRight() {
-        return isRight;
-    }
-
-    public void setRight(boolean right) {
-        isRight = right;
-    }
-
-    protected boolean isJump;
-    protected boolean isDefend;
-    protected int x;
-    protected int y;
-    protected int z;
-//    protected int drawX; // positon to draw
-    protected int drawY; // position to draw
-    private int width;
-    private int height;
-
     public GameObject(int x, int y, int z){
         this.x = x;
+        this.drawX = x;
         this. y = y ;
         this.z = z;
+        this.drawY = z;
+        GameObjectManager.getInstance().add(this);
     }
 
     public GameObject(int x, int y, int z, int width, int height) {
         this.x = x;
+        this.drawX = x;
         this.y = y;
         this.z = z;
-        this.drawY = y + z;
+        this.drawY = z;
         this.width = width;
         this.height = height;
+        GameObjectManager.getInstance().add(this);
     }
 
     public boolean isAlive() {
@@ -60,6 +56,7 @@ public abstract class GameObject {
     public void setAlive(boolean alive) {
         isAlive = alive;
     }
+
     public int getX() {
         return x;
     }
@@ -80,6 +77,7 @@ public abstract class GameObject {
         return height;
     }
 
+
     public boolean isAttack() {
         return isAttack;
     }
@@ -88,12 +86,16 @@ public abstract class GameObject {
         return isJump;
     }
 
-    public boolean isDefend() {
-        return isDefend;
-    }
-
     public int getDrawY() {
         return drawY;
+    }
+
+    public int getDrawX() {
+        return drawX;
+    }
+
+    public void setDrawX(int drawX) {
+        this.drawX = drawX;
     }
 
     public void setAttack(boolean attack) {
@@ -102,15 +104,6 @@ public abstract class GameObject {
 
     public void setJump(boolean jump) {
         isJump = jump;
-    }
-
-    public void setDefend(boolean defend) {
-        isDefend = defend;
-    }
-
-    // BAN DAN ROBOT
-    public int middleY() {
-        return this.y + this.height / 2;
     }
 
     public void setX(int x) {
@@ -127,6 +120,21 @@ public abstract class GameObject {
 
     public void setDrawY(int drawY) {
         this.drawY = drawY;
+    }
+
+    public void destroy(){
+        CollisionManager.getInstance().unregister(this);
+        GameObjectManager.getInstance().remove(this);
+    }
+
+    public void moveDrawXToLeft(int speed){
+        this.drawX -= speed;
+        this.setX(this.getDrawX());
+    }
+
+    public void moveDrawXToRight(int speed){
+        this.drawX += speed;
+        this.setX(this.getDrawX());
     }
 
     public boolean intersects(GameObject gameObject){

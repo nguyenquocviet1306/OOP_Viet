@@ -1,8 +1,8 @@
 package views;
 
 import models.GameObject;
-
 import utils.Utils;
+
 import java.awt.*;
 
 /**
@@ -31,10 +31,10 @@ public class SingleView implements View {
     public void draw(Graphics g, GameObject gameObject) {
         g.drawImage(
                 image,
-                gameObject.getX(),
-                gameObject.getY(),
-                gameObject.getWidth(),
-                gameObject.getHeight(),
+                gameObject.getDrawX(),
+                gameObject.getDrawY(),
+//                gameObject.getWidth(),
+//                gameObject.getHeight(),
                 null);
     }
 }

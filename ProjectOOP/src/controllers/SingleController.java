@@ -11,10 +11,9 @@ import java.awt.*;
 /**
  * Created by Nhan on 3/7/2017.
  */
-public class SingleController implements BaseController {
+public abstract class SingleController implements BaseController {
     protected GameObject gameObject;
     protected View view;
-    protected boolean isAlive = true;
 
     public SingleController() {
     }
@@ -44,6 +43,10 @@ public class SingleController implements BaseController {
     }
 
     public boolean isAlive(){
-        return isAlive;
+        return gameObject.isAlive();
+    }
+
+    public GameObject getGameObject() {
+        return gameObject;
     }
 }
